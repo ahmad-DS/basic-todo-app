@@ -1,0 +1,6 @@
+.git
+.gitignore
+vendor/
+runtime/
+web/assets/
+.env

@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: yii2-todo
+    runtime: php
+    buildCommand: composer install --no-dev --optimize-autoloader
+    startCommand: php -S 0.0.0.0:$PORT -t web
