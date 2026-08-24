@@ -11,8 +11,19 @@ class TodoController extends Controller
     {
         \Yii::$app->response->format = Response::FORMAT_JSON;
 
-        return [
-            'message' => 'Hello from Todo API'
+        $todos = [
+            [
+                'id' => 1,
+                'title' => 'Learn Yii2',
+                'completed' => false
+            ],
+            [
+                'id' => 2,
+                'title' => 'Build Todo App',
+                'completed' => false
+            ]
         ];
+
+        return $todos;
     }
 }
