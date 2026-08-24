@@ -4,26 +4,21 @@ namespace app\controllers;
 
 use yii\web\Controller;
 use yii\web\Response;
+use app\models\Todo;
 
 class TodoController extends Controller
 {
     public function actionIndex()
-    {
-        \Yii::$app->response->format = Response::FORMAT_JSON;
+{
+    \Yii::$app->response->format = Response::FORMAT_JSON;
 
-        $todos = [
-            [
-                'id' => 1,
-                'title' => 'Learn Yii2',
-                'completed' => false
-            ],
-            [
-                'id' => 2,
-                'title' => 'Build Todo App',
-                'completed' => false
-            ]
-        ];
+    $todo = new Todo();
 
-        return $todos;
-    }
+    $todo->title = 'Learn Yii2';
+    $todo->completed = false;
+
+    $todo->save();
+
+    return $todo;
+}
 }
