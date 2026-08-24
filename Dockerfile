@@ -34,4 +34,9 @@ RUN mkdir -p /var/www/html/runtime /var/www/html/web/assets
 # Set permissions for Yii2 runtime and assets folders
 RUN chown -R www-data:www-data /var/www/html/runtime /var/www/html/web/assets
 
+# Give executable permissions to our startup script
+RUN chmod +x /var/www/html/start.sh
+
 EXPOSE 80
+
+CMD ["/var/www/html/start.sh"]
