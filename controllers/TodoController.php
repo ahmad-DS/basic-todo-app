@@ -55,66 +55,76 @@ class TodoController extends Controller
     }
 
     public function actionUpdate($id)
-{
-    \Yii::$app->response->format = Response::FORMAT_JSON;
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
 
-    $request = \Yii::$app->request;
+        $request = \Yii::$app->request;
 
-    $todo = Todo::findOne($id);
+        $todo = Todo::findOne($id);
 
-    if (!$todo) {
-        \Yii::$app->response->statusCode = 404;
+        if (!$todo) {
+            \Yii::$app->response->statusCode = 404;
+
+            return [
+                'error' => 'Todo not found'
+            ];
+        }
+
+        $data = $request->bodyParams;
+
+        if (isset($data['title'])) {
+            $todo->title = $data['title'];
+        }
+
+        if (isset($data['completed'])) {
+            $todo->completed = $data['completed'];
+        }
+
+        if ($todo->save()) {
+            return $todo;
+        }
+
+        \Yii::$app->response->statusCode = 422;
 
         return [
-            'error' => 'Todo not found'
+            'errors' => $todo->errors
         ];
     }
 
-    $data = $request->bodyParams;
+    public function actionDelete($id)
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
 
-    if (isset($data['title'])) {
-        $todo->title = $data['title'];
-    }
+        $todo = Todo::findOne($id);
 
-    if (isset($data['completed'])) {
-        $todo->completed = $data['completed'];
-    }
+        if (!$todo) {
+            \Yii::$app->response->statusCode = 404;
 
-    if ($todo->save()) {
-        return $todo;
-    }
+            return [
+                'error' => 'Todo not found'
+            ];
+        }
 
-    \Yii::$app->response->statusCode = 422;
+        if ($todo->delete()) {
+            return [
+                'message' => 'Todo deleted successfully'
+            ];
+        }
 
-    return [
-        'errors' => $todo->errors
-    ];
-}
-
-public function actionDelete($id)
-{
-    \Yii::$app->response->format = Response::FORMAT_JSON;
-
-    $todo = Todo::findOne($id);
-
-    if (!$todo) {
-        \Yii::$app->response->statusCode = 404;
+        \Yii::$app->response->statusCode = 500;
 
         return [
-            'error' => 'Todo not found'
+            'error' => 'Failed to delete todo'
         ];
     }
 
-    if ($todo->delete()) {
-        return [
-            'message' => 'Todo deleted successfully'
-        ];
+    public function actionUi()
+    {
+        return $this->render('index');
     }
 
-    \Yii::$app->response->statusCode = 500;
-
-    return [
-        'error' => 'Failed to delete todo'
-    ];
-}
+    public function actionError()
+    {
+        return $this->render('error');
+    }
 }

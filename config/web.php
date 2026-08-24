@@ -37,7 +37,7 @@ $config = [
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
-            'errorAction' => 'site/error',
+            'errorAction' => 'todo/error',
         ],
         'mailer' => \yii\mail\MailerInterface::class,
         'log' => [
