@@ -8,17 +8,32 @@ use app\models\Todo;
 
 class TodoController extends Controller
 {
+    public $enableCsrfValidation = false;
     public function actionIndex()
+    {
+        \Yii::$app->response->format = Response::FORMAT_JSON;
+
+        return Todo::find()->all();
+    }
+
+
+   public function actionCreate()
 {
     \Yii::$app->response->format = Response::FORMAT_JSON;
 
+    $request = \Yii::$app->request;
+
     $todo = new Todo();
 
-    $todo->title = 'Learn Yii2';
+    $todo->title = $request->post('title');
     $todo->completed = false;
 
-    $todo->save();
+    if ($todo->save()) {
+        return $todo;
+    }
 
-    return $todo;
+    return [
+        'errors' => $todo->errors
+    ];
 }
 }
