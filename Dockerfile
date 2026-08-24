@@ -23,7 +23,7 @@ COPY . .
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 # Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader
+RUN composer install --optimize-autoloader
 
 # Give Apache access
 RUN chown -R www-data:www-data /var/www/html
