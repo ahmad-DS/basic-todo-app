@@ -35,8 +35,8 @@ RUN mkdir -p /var/www/html/runtime /var/www/html/web/assets
 RUN chown -R www-data:www-data /var/www/html/runtime /var/www/html/web/assets
 
 # Give executable permissions to our startup script
-RUN chmod +x /var/www/html/start.sh
+RUN chmod +x /var/www/html/db_migration.sh
 
 EXPOSE 80
 
-CMD ["/var/www/html/start.sh"]
+CMD ["/var/www/html/db_migration.sh"]
