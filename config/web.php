@@ -60,6 +60,7 @@ $config = [
         */
     ],
     'params' => $params,
+    'defaultRoute' => 'todo/ui',
 ];
 
 if (YII_ENV_DEV) {
